@@ -595,7 +595,7 @@ public:
 
       std::regex weightgroupmg26x("<weightgroup\\s+(?:name|type)=\"(.*)\"\\s+combine=\"(.*)\"\\s*>");
       std::regex weightgroup("<weightgroup\\s+combine=\"(.*)\"\\s+(?:name|type)=\"(.*)\"\\s*>");
-      std::regex weightgroupRwgt("<weightgroup\\s+(?:name|type)=\"(.*)\"\\s*>");
+      std::regex weightgroupRwgt("<weightgroup\\s+(?:name|type)=\"([^\"]*)\"[^>]*>");
       std::regex endweightgroup("</weightgroup>");
       std::regex scalewmg26x(
           "<weight\\s+(?:.*\\s+)?id=\"(\\d+)\"\\s*(?:lhapdf=\\d+|dyn=\\s*-?\\d+)?\\s*((?:[mM][uU][rR]|renscfact)=\"("
@@ -626,7 +626,7 @@ public:
       std::regex mgVerRegex(R"(VERSION\s+(\d+)\.(\d+)\.(\d+))");
       bool isMGVer2x = false;
 
-      std::regex rwgt("<weight\\s+id=\"(.+)\">(.+)?(</weight>)?");
+      std::regex rwgt("<weight\\s+id=\"([^\"]+)\">([^<]+)?(</weight>)?");
       std::smatch groups;
       for (auto iter = lheInfo->headers_begin(), end = lheInfo->headers_end(); iter != end; ++iter) {
         if (iter->tag() == "MG5ProcCard") {
@@ -879,6 +879,8 @@ public:
               }
             }
           } else if (std::regex_search(lines[iLine], groups, weightgroupRwgt)) {
+            if (lheDebug)
+              std::cout << ">>> Should be LHE weights for reweighting" << std::endl;
             std::string groupname = groups.str(1);
             if (groupname.find("mg_reweighting") != std::string::npos) {
               if (lheDebug)
