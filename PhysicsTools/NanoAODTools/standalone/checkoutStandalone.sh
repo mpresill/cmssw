@@ -4,8 +4,8 @@
 # 
 
 DEST="MyProject"
-REPO=https://github.com/cms-sw/cmssw.git
-BRANCH=master
+REPO=https://github.com/mpresill/cmssw.git
+BRANCH=nanogen_EFT_CMSSW_13_0_X
 
 while getopts ":d:r:b:" opt; do
     case $opt in
@@ -16,8 +16,8 @@ while getopts ":d:r:b:" opt; do
 	   exit 1;;
 	*) echo "Options:"
 	   echo "-d  destination folder (default: MyProject)"
-	   echo "-r  repository (default: https://github.com/cms-sw/cmssw.git)"
-	   echo "-b  branch (default: master)"
+	   echo "-r  repository (default: https://github.com/mpresill/cmssw.git)"
+	   echo "-b  branch (default: nanogen_EFT_CMSSW_13_0_X)"
 	   exit 1
     esac
 done

@@ -18,7 +18,7 @@ It is recommended to add external modules (eg correction modules) in separate pa
 
 You need to setup python 3 and a recent ROOT version first.
 
-    wget https://raw.githubusercontent.com/cms-sw/cmssw/master/PhysicsTools/NanoAODTools/standalone/checkoutStandalone.sh
+    wget https://raw.githubusercontent.com/mpresill/cmssw/nanogen_EFT_CMSSW_13_0_X/PhysicsTools/NanoAODTools/standalone/checkoutStandalone.sh
     bash checkoutStandalone.sh -d MyProject 
     cd MyProject
     source PhysicsTools/NanoAODTools/standalone/env_standalone.sh
