@@ -590,7 +590,7 @@ public:
           "<weight\\s+MUF=\"(?:\\S+)\"\\s*MUR=\"(?:\\S+)\"\\s*PDF=\"(?:\\S+)\"\\s*id=\"(\\S+)\"\\s*>"
           "\\s*(?:PDF=(\\d+)\\s*MemberID=(\\d+))?\\s*(?:\\s.*)?</"
           "weight>");
-      std::regex rwgt("<weight\\s+id=\"([^\"]+)\">([^<]+)?(</weight>)?")
+      std::regex rwgt("<weight\\s+id=\"([^\"]+)\">([^<]+)?(</weight>)?");
       std::smatch groups;
       for (auto iter = lheInfo->headers_begin(), end = lheInfo->headers_end(); iter != end; ++iter) {
         if (iter->tag() != "initrwgt") {
