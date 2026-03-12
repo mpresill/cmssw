@@ -564,7 +564,7 @@ public:
 
       std::regex weightgroupmg26x("<weightgroup\\s+(?:name|type)=\"(.*)\"\\s+combine=\"(.*)\"\\s*>");
       std::regex weightgroup("<weightgroup\\s+combine=\"(.*)\"\\s+(?:name|type)=\"(.*)\"\\s*>");
-      std::regex weightgroupRwgt("<weightgroup\\s+(?:name|type)=\"(.*)\"\\s*>");
+      std::regex weightgroupRwgt("<weightgroup\\s+(?:name|type)=\"([^\"]*)\"[^>]*>");
       std::regex endweightgroup("</weightgroup>");
       std::regex scalewmg26x(
           "<weight\\s+(?:.*\\s+)?id=\"(\\d+)\"\\s*(?:lhapdf=\\d+|dyn=\\s*-?\\d+)?\\s*((?:[mM][uU][rR]|renscfact)=\"("
@@ -591,8 +591,7 @@ public:
           "<weight\\s+MUF=\"(?:\\S+)\"\\s*MUR=\"(?:\\S+)\"\\s*PDF=\"(?:\\S+)\"\\s*id=\"(\\S+)\"\\s*>"
           "\\s*(?:PDF=(\\d+)\\s*MemberID=(\\d+))?\\s*(?:\\s.*)?</"
           "weight>");
-
-      std::regex rwgt("<weight\\s+id=\"(.+)\">(.+)?(</weight>)?");
+      std::regex rwgt("<weight\\s+id=\"([^\"]+)\">([^<]+)?(</weight>)?")
       std::smatch groups;
       for (auto iter = lheInfo->headers_begin(), end = lheInfo->headers_end(); iter != end; ++iter) {
         if (iter->tag() != "initrwgt") {
