@@ -560,7 +560,6 @@ public:
       std::vector<ScaleVarWeight> scaleVariationIDs;
       std::vector<PDFSetWeights> pdfSetWeightIDs;
       std::vector<std::string> lheReweighingIDs;
-      bool isFirstGroup = true;
 
       std::regex weightgroupmg26x("<weightgroup\\s+(?:name|type)=\"(.*)\"\\s+combine=\"(.*)\"\\s*>");
       std::regex weightgroup("<weightgroup\\s+combine=\"(.*)\"\\s+(?:name|type)=\"(.*)\"\\s*>");
@@ -626,12 +625,9 @@ public:
               groupname = groups.str(1);
             if (lheDebug)
               std::cout << ">>> Looks like the beginning of a weight group for '" << groupname << "'" << std::endl;
-            if (groupname.find("scale_variation") == 0 || groupname == "Central scale variation" || isFirstGroup) {
-              if (lheDebug && groupname.find("scale_variation") != 0 && groupname != "Central scale variation")
-                std::cout << ">>> First weight is not scale variation, but assuming is the Central Weight" << std::endl;
-              else if (lheDebug)
+            if (groupname.find("scale_variation") == 0 || groupname == "Central scale variation") {
+              if (lheDebug)
                 std::cout << ">>> Looks like scale variation for theory uncertainties" << std::endl;
-              isFirstGroup = false;
               for (++iLine; iLine < nLines; ++iLine) {
                 if (lheDebug) {
                   std::cout << "    " << lines[iLine];
