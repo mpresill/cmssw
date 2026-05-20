@@ -35,6 +35,7 @@ def parse_args():
     parser.add_argument('-t', '--tag', default=production_tag, help='Production Tag extra')
     parser.add_argument('-p', '--psetcfg', default="../test/run_bphNano_cfg.py", help='Plugin configuration file')
     parser.add_argument('-e', '--extra', nargs='*', default=list(),  help='Optional extra input files')
+    parser.add_argument('-g', '--gridpack', default=None, help='Gridpack path passed to the cmsRun config via pyCfgParams')
     parser.add_argument('-tt', '--test', action='store_true', help='Flag a test job')
     return parser.parse_args()
     
@@ -75,6 +76,7 @@ samples_schema = Schema({
     "dataset": And(str, error="dataset should be a string"),
     "isMC": And(bool, error="isMC should be a boolean"),
     Optional("decay") : And(str, error="decay to reconstruct"), 
+    Optional("gridpack") : And(str, error="gridpack should be a string"),
     Optional("goldenjson") : And(str, error="golden json file path should be a string"),
     Optional("globaltag") : And(str, error="globaltag should be a string"),
     Optional("parts"): [And(int, error="parts should be a list of integers")]
@@ -169,6 +171,10 @@ if __name__ == '__main__':
                     'decay=%s' % decay,
                     'maxEvents=%s' % maxevents,
                  ]
+
+                gridpack = args.gridpack if args.gridpack is not None else sample_info.get('gridpack', None)
+                if sample_info['isMC'] and gridpack:
+                    config_.JobType.pyCfgParams.append('gridpack=%s' % gridpack)
             
                 if args.test:
                    config_.Data.totalUnits = 10
@@ -186,4 +192,3 @@ if __name__ == '__main__':
     else:
         print(f"Invalid Crab command : {args.cmd}")
     
-

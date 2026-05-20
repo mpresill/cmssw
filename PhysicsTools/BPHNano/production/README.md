@@ -3,7 +3,7 @@
 Largely inspired by G. Karahtanasis crab submission script
 
 ```
-usage: submit_on_crab.py [-h] [-y YAML] [-c {submit,status}] [-f FILTER] [-w WORKAREA] [-o OUTPUTDIR] [-t TAG] [-p PSETCFG] [-e [EXTRA ...]]
+usage: submit_on_crab.py [-h] [-y YAML] [-c {submit,status}] [-f FILTER] [-w WORKAREA] [-o OUTPUTDIR] [-t TAG] [-p PSETCFG] [-e [EXTRA ...]] [-g GRIDPACK]
 
 A multicrab submission script
 
@@ -23,6 +23,8 @@ optional arguments:
                         Plugin configuration file
   -e [EXTRA ...], --extra [EXTRA ...]
                         Optional extra input files
+  -g GRIDPACK, --gridpack GRIDPACK
+                        Gridpack path passed to the cmsRun config via pyCfgParams
   -tt, --test           Flag a test job
 ```
 
@@ -51,11 +53,11 @@ samples_schema = Schema({
     "dataset": And(str, error="dataset should be a string"),
     "isMC": And(bool, error="isMC should be a boolean"),
     Optional("decay") : And(str, error="decay to reconstruct"),
+    Optional("gridpack") : And(str, error="gridpack should be a string"),
     Optional("goldenjson") : And(str, error="golden json file path should be a string"),
     Optional("globaltag") : And(str, error="globaltag should be a string"),
     Optional("parts"): [And(int, error="parts should be a list of integers")]
 })
 ```
-
 
 
