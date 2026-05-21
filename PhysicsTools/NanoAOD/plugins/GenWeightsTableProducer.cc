@@ -400,9 +400,18 @@ public:
       if (mPDF != pdfWeightIDs.end())
         wPDF[mPDF - pdfWeightIDs.begin()] = weight.wgt / w0;
 
-      auto mRwgt = std::find(rwgtWeightIDs.begin(), rwgtWeightIDs.end(), weight.id);
+      // auto mRwgt = std::find(rwgtWeightIDs.begin(), rwgtWeightIDs.end(), weight.id);
+      auto mRwgt = std::find_if(rwgtWeightIDs.begin(), rwgtWeightIDs.end(),
+      [&](const std::string& id){
+        return std::equal(id.begin(), id.end(),
+                          weight.id.begin(),
+                          weight.id.end(),
+                          [](char a, char b){
+                            return std::tolower(a) == std::tolower(b);
+                          });
+      });
       if (mRwgt != rwgtWeightIDs.end())
-        wRwgt[mRwgt - rwgtWeightIDs.begin()] = weight.wgt / w0;
+        wRwgt[mRwgt - rwgtWeightIDs.begin()] = weight.wgt / w0;      
 
       auto mNamed = std::find(namedWeightIDs_.begin(), namedWeightIDs_.end(), weight.id);
       if (mNamed != namedWeightIDs_.end())
@@ -897,7 +906,7 @@ public:
 
         // ------ LHE REWEIGHTING -------
         if (lheDebug) {
-          std::cout << "Found " << lheReweighingIDs.size() << " reweighting weights" << std::endl;
+          std::cout << "Found " << lheReweighingIDs.size() << "  reweights weights" << std::endl;
         }
         std::copy(lheReweighingIDs.begin(), lheReweighingIDs.end(), std::back_inserter(weightChoice->rwgtIDs));
 
